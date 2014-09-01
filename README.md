@@ -1,7 +1,7 @@
-[![Circle CI](https://circleci.com/gh/circleci/cucumber-formatter.png?style=badge&circle-token=4f4a358dfd39c63b90870dc70f7fffd005e4c85c)](https://circleci.com/gh/circleci/cucumber-formatter)
-
 cucumber-formatter
 ==================
+
+[![Circle CI](https://circleci.com/gh/circleci/cucumber-formatter.png?style=badge&circle-token=4f4a358dfd39c63b90870dc70f7fffd005e4c85c)](https://circleci.com/gh/circleci/cucumber-formatter)
 
 Custom formatter for Cucumber that defends against [timecop](https://github.com/travisjeffery/timecop) overriding Time.now.
 
