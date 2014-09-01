@@ -5,7 +5,7 @@ cucumber-formatter
 
 Custom formatter for Cucumber that defends against [timecop](https://github.com/travisjeffery/timecop) overriding Time.now.
 
-Should be dumped into the features/support directory and specified with Cucumber's --format flag:
+The `_circleci_formatter.rb` file should be dumped into the features/support directory and specified with Cucumber's --format flag:
 
 ```
 bundle exec cucumber --format CircleCICucumberFormatter::CircleCIJson
