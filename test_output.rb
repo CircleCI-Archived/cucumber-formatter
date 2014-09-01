@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+# takes two file names as arguments, expects first argument to be the unpatched json output
+# and second argument to be the patched json output
+# Checks that the times in the unpatched output are wrong and that the times in the patched output are correct.
+
 require 'json'
 
 broken_json = JSON.parse(File.read(ARGV[0]))
