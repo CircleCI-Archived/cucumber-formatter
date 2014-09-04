@@ -39,7 +39,7 @@ module CircleCICucumberFormatter
     # override step_finish with un-patched Time.now
     def after_step(step)
       step_finish = (Time.original_now - @step_time)
-      unless @outline and @options[:expand] and not @in_instantiated_scenario
+      unless @outline and @options and @options[:expand] and not @in_instantiated_scenario
         @gf.append_duration(step_finish)
       end
     end
