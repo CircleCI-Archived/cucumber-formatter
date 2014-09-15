@@ -1,1 +1,5 @@
 Gemfile.lock
+gemfiles
+/features/support/_circleci_formatter.rb
+/broken.json
+/fixed.json
