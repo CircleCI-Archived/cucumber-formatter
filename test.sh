@@ -28,8 +28,8 @@ do
 
     bundle install
 
-    rm broken.json; true # only delete if exists
-    rm fixed.json; true
+    rm broken.json || true # only delete if exists
+    rm fixed.json || true
 
     # Run once with the unpatched formatter
     bundle exec cucumber --format json --out broken.json
