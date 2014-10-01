@@ -16,6 +16,8 @@ module CircleCICucumberFormatter
         Time.now_without_mock_time
       else
         Time.now
+      end
+    end
 
     def initialize(runtime, io, options)
       @io = ensure_io(io, "json")
