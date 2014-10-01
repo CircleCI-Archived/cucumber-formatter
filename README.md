@@ -13,7 +13,6 @@ bundle exec cucumber --format CircleCICucumberFormatter::CircleCIJson
 
 ### How it works
 
-Aliases Time.now to Time.original_now before any other files have a chance to modify the Time class. 
-Then overrides the functions that keep track of the test's duration. 
+Timecop redefines `Time.now` to `Time.now_without_mock_time`. If that method exists, then we call that method instead of `Time.now`.
 
 This approach is somewhat brittle because it relies on the internals of before_step and after_step not changing.
