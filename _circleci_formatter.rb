@@ -19,8 +19,8 @@ module CircleCICucumberFormatter
       end
     end
 
-    def initialize(runtime, io, options)
-      @io = ensure_io(io, "json")
+    def initialize(_, io, options)
+      @io = ensure_io(io, 'json')
       f = Gherkin::Formatter::JSONFormatter.new(@io)
       begin
         super(f, false, options)
@@ -37,7 +37,7 @@ module CircleCICucumberFormatter
 
     # used for capturing duration, copied from gherkin_formatter_adapter.rb
     # override step_finish with un-patched Time.now
-    def after_step(step)
+    def after_step(*)
       step_finish = (unpatched_time_now - @step_time)
       unless @outline and @options and @options[:expand] and not @in_instantiated_scenario
         @gf.append_duration(step_finish)
