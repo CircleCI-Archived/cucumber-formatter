@@ -1,28 +1,23 @@
 #!/usr/bin/env bash
 
 set -x
-set -e
 
-mkdir -p features/support
-cp _circleci_formatter.rb features/support
+FAILURE=false
+
 mkdir -p gemfiles
+mkdir $CIRCLE_ARTIFACTS/broken
+mkdir $CIRCLE_ARTIFACTS/fixed
 
-# latest version is broken, see https://github.com/cucumber/cucumber/issues/745
-#versions=( "1.3.17" "1.3.0" "git" )
-versions=( "1.3.17" "1.3.0" )
+versions=( "2.3.2" "2.2.0" "2.1.0" "1.3.20" )
 
 for v in "${versions[@]}"
 do
     echo "Testing with cucumber $v"
     GEMFILE="gemfiles/Gemfile.$v"
 
-    if [[ "$v" -eq "git" ]]; then
-        v="git: 'git@github.com:cucumber\/cucumber.git'"
-    else
-        v="'$v'"
-    fi
+    quoted_v="'$v'"
 
-    sed "s/gem 'cucumber'/gem 'cucumber', $v/" Gemfile > $GEMFILE
+    sed "s/gem 'cucumber'/gem 'cucumber', $quoted_v/" Gemfile > $GEMFILE
 
     export BUNDLE_GEMFILE=$GEMFILE
 
@@ -33,13 +28,19 @@ do
 
     # Run once with the unpatched formatter
     bundle exec cucumber --format json --out broken.json
+    cp broken.json $CIRCLE_ARTIFACTS/broken/broken-$v.json
 
     mkdir -p features/support
     cp _circleci_formatter.rb features/support
 
     # Run once with our formatter
     bundle exec cucumber --format CircleCICucumberFormatter::CircleCIJson --out fixed.json
+    cp fixed.json $CIRCLE_ARTIFACTS/fixed/fixed-$v.json
 
     # Check that the times look correct
-    ./test_output.rb broken.json fixed.json
+    ./test_output.rb broken.json fixed.json || FAILURE=true
+
+    rm features/support/_circleci_formatter*
 done
+
+if [[ $FAILURE == true ]] ; then exit 1; else exit 0; fi
