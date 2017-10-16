@@ -1,5 +1,35 @@
 require 'time'
 
+if Cucumber::VERSION =~ /^3.*/
+  require 'cucumber/core/test/timer'
+  require 'cucumber/formatter/pretty'
+  module Cucumber
+    module Core
+      module Test
+        class Timer
+          def unpatched_time_now
+            if Time.respond_to?(:now_without_mock_time)
+              Time.now_without_mock_time
+            else
+              Time.now
+            end
+          end
+
+          def time_in_nanoseconds
+            t = unpatched_time_now
+            t.to_i * 10 ** 9 + t.nsec
+          end
+        end
+      end
+    end
+  end
+
+  module CircleCICucumberFormatter
+    class CircleCIJson < Cucumber::Formatter::Pretty #:nodoc:
+    end
+  end
+end # if
+
 if Cucumber::VERSION =~ /^2.*/
   require 'cucumber/core/test/timer'
   require 'cucumber/formatter/json'

@@ -8,7 +8,7 @@ mkdir -p gemfiles
 mkdir $CIRCLE_ARTIFACTS/broken
 mkdir $CIRCLE_ARTIFACTS/fixed
 
-versions=( "2.3.2" "2.2.0" "2.1.0" "1.3.20" )
+versions=( "3.0.1" "2.3.2" "2.2.0" "2.1.0" "1.3.20" )
 
 for v in "${versions[@]}"
 do
