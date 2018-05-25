@@ -5,3 +5,4 @@ machine:
 test:
   override:
     - ./test.sh
+    - bundle exec rubocop --format offenses --format progress
